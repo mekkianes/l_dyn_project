@@ -2,7 +2,8 @@ import http.server
 import socketserver
 
 import pandas as pd 
-
+from urllib.parse import urlparse
+from urllib.parse import parse_qs
 
 
 
@@ -13,12 +14,14 @@ class CostumHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
                 self.send_header("Content-type", "text/html")
                 
                 self.end_headers()
+                query_components = parse_qs(urlparse(self.path))
 
                 # get the value of self.path 
-                if self.path == '/':
+                if self.path == '/basicfilter':
                         data = pd.read_csv("tweets.csv")
+                        print("hello")
                         html = pd.DataFrame.to_html(data)
-
+                        
 
                         self.wfile.write(bytes(html, "utf8"))
                         return 
