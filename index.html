@@ -2,8 +2,26 @@
 <html>
   <head>
     <title>This is the title of the webpage!</title>
+    <script>src = "client.js"</script>
   </head>
   <body>
     <p>This is an example paragraph. Anything in the <strong>body</strong> tag will appear on the page, just like this <strong>p</strong> tag and its contents.</p>
+    <form class="form-inline">
+      <input type="text" id="country" name="Country">
+      <button type="submit">Search !</button>
+    </form>
+    <!--
+    <script>
+      $(document).ready(function() {
+       $('form').on('submit', function(event) {
+        alert('hi');
+        event.preventDefault();
+       });
+       
+      });
+  
+    </script>
+  -->
   </body>
+
 </html>

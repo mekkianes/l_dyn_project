@@ -24,7 +24,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 self.wfile.write(f.read())
                 f.close()
 
-            if path == '/country_tweets':
+            if path == '/country_tweets': #/country_tweets?country=France
                 if 'country' in params:
                     country = params['country'][0]
                 json_result = tweet.get_number_tweets_country(country)
@@ -34,7 +34,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 self.wfile.write(bytes(json.dumps(json_result), "utf8"))
         
         else:
-            self.send_response(200)
+            self.send_response(404)
             self.send_header("Content-type", "text/html")
             self.end_headers()
             html = f"<html><head></head><body><h1>404 ERROR !!!!</h1></body></html>"
