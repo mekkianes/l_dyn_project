@@ -15,8 +15,11 @@ Client.ajax = function (method, url) {
         xhr.addEventListener("readystatechange",  function () {
             /* quand la requête change à l'état 'terminé' */
             if (this.readyState == 4) {
-                if (this.status == 200) 
+                if (this.status == 200) {
+                    console.log("yeeeees");
                     resolve(this.response);
+
+                }
                 else
                     reject(this.status + " : " + this.responseText);
             }
@@ -46,7 +49,7 @@ Client.query = async function (params) {
         res = await Client.ajax("GET", url)
         return res;
     }catch(str){
-        alert("ERROR")
+        alert("ERROR1")
         res =str
     }
     return res;
