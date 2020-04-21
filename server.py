@@ -11,10 +11,10 @@ tweet = Tweets()
 
 class Handler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
-
+        print("hello")
         path = parse.urlparse(self.path).path
         params = parse_qs(urlparse(self.path).query)
-
+        print(path)
         services_list = ['/', '/country_tweets']
         if path in services_list:
             if path == '/':

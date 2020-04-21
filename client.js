@@ -14,7 +14,10 @@ Client.ajax = function (method, url) {
         let xhr = new XMLHttpRequest();
         xhr.addEventListener("readystatechange",  function () {
             /* quand la requête change à l'état 'terminé' */
+            console.log(this.readyState);
+
             if (this.readyState == 4) {
+
                 if (this.status == 200) {
                     console.log("yeeeees");
                     resolve(this.response);
@@ -46,6 +49,8 @@ Client.query = async function (params) {
         + paramString;
     console.log("url est ::",url)
     try{
+        console.log("coucou");
+
         res = await Client.ajax("GET", url)
         return res;
     }catch(str){
