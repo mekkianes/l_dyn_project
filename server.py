@@ -1,3 +1,4 @@
+
 import http.server
 import socketserver
 from http import HTTPStatus
@@ -24,7 +25,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 self.wfile.write(f.read())
                 f.close()
 
-            if path == '/country_tweets': #/country_tweets?country=France
+            if path == '/country_tweets':
                 if 'country' in params:
                     country = params['country'][0]
                 json_result = tweet.get_number_tweets_country(country)
@@ -34,14 +35,14 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 self.wfile.write(bytes(json.dumps(json_result), "utf8"))
         
         else:
-            self.send_response(404)
+            self.send_response(200)
             self.send_header("Content-type", "text/html")
             self.end_headers()
             html = f"<html><head></head><body><h1>404 ERROR !!!!</h1></body></html>"
             self.wfile.write(bytes(html, "utf8"))
         return
 
-httpd = socketserver.TCPServer(('', 8000), Handler)
+httpd = socketserver.TCPServer(('', 8001), Handler)
 try:
     httpd.serve_forever()
 except KeyboardInterrupt:

@@ -1,6 +1,12 @@
 var Client = {};
 
-let jsonexample_param={country:"India"};
+let jsonexample_param={};
+
+
+
+let country_input = document.getElementById("country");
+
+let submit_button = document.getElementById("submit_button");
 
 
 Client.ajax = function (method, url) {
@@ -46,7 +52,35 @@ Client.query = async function (params) {
     return res;
 };
 
-let resume=Client.query(jsonexample_param).then(function(moi){
-    console.log(JSON.parse(moi))
-    return JSON.parse(moi)
+
+
+
+
+function dessine_graph(){
+
+    let myCanevas = document.createElement("canevas");
+
+    myCanevas.id ="canevas1";
+    //canevas_context = myCanevas.getContext("2d")
+    myCanevas.width = 500;
+    myCanevas.height = 500;
+    myCanevas.style.border = "1px solid";
+
+ }
+     
+
+
+submit_button.addEventListener("click",function(){
+    console.info("helllooooo");
+    jsonexample_param["country"] = country
+    /* let resume=Client.query(jsonexample_param).then(function(moi){
+        console.log(JSON.parse(moi))
+        dessine_graph ();
+        //return JSON.parse(moi)
+        console.log("hello");
+    }); */
+    
 });
+
+console.log("fin");
+ 
