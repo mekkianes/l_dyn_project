@@ -42,7 +42,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             self.wfile.write(bytes(html, "utf8"))
         return
 
-httpd = socketserver.TCPServer(('', 8001), Handler)
+httpd = socketserver.TCPServer(('', 8000), Handler)
 try:
     httpd.serve_forever()
 except KeyboardInterrupt:

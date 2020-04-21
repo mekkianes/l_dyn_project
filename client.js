@@ -15,7 +15,7 @@ Client.ajax = function (method, url) {
         xhr.addEventListener("readystatechange",  function () {
             /* quand la requête change à l'état 'terminé' */
             if (this.readyState == 4) {
-                if (this.status == 200)
+                if (this.status == 200) 
                     resolve(this.response);
                 else
                     reject(this.status + " : " + this.responseText);
@@ -72,13 +72,14 @@ function dessine_graph(){
 
 submit_button.addEventListener("click",function(){
     console.info("helllooooo");
-    jsonexample_param["country"] = country
-    /* let resume=Client.query(jsonexample_param).then(function(moi){
+    jsonexample_param["country"] = country_input.value
+     let resume = Client.query(jsonexample_param).then(function(moi){
         console.log(JSON.parse(moi))
-        dessine_graph ();
-        //return JSON.parse(moi)
+       // dessine_graph ();
+      
         console.log("hello");
-    }); */
+        return JSON.parse(moi)
+    }); 
     
 });
 
