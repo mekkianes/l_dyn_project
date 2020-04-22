@@ -17,7 +17,8 @@ Client.ajax = function (method, url) {
             console.log(this.readyState);
 
             if (this.readyState == 4) {
-
+                console.log("statusssssss")
+                console.log(this.status)
                 if (this.status == 200) {
                     console.log("yeeeees");
                     resolve(this.response);
