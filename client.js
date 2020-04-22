@@ -1,29 +1,20 @@
 var Client = {};
 
-let jsonexample_param={};
-
-
 
 let country_input = document.getElementById("country");
 
-let submit_button = document.getElementById("submit_button");
+let submit_button = document.getElementById("submitButton");
 
+console.log('Client 1');
 
 Client.ajax = function (method, url) {
     return new Promise ((resolve, reject) => {
         let xhr = new XMLHttpRequest();
         xhr.addEventListener("readystatechange",  function () {
             /* quand la requête change à l'état 'terminé' */
-            console.log(this.readyState);
-
             if (this.readyState == 4) {
-                console.log("statusssssss")
-                console.log(this.status)
-                if (this.status == 200) {
-                    console.log("yeeeees");
+                if (this.status == 200)
                     resolve(this.response);
-
-                }
                 else
                     reject(this.status + " : " + this.responseText);
             }
@@ -50,47 +41,18 @@ Client.query = async function (params) {
         + paramString;
     console.log("url est ::",url)
     try{
-        console.log("coucou");
-
         res = await Client.ajax("GET", url)
         return res;
     }catch(str){
-        alert("ERROR1")
+        alert("ERROR")
         res =str
     }
     return res;
 };
-
-
-
-
-
-function dessine_graph(){
-
-    let myCanevas = document.createElement("canevas");
-
-    myCanevas.id ="canevas1";
-    //canevas_context = myCanevas.getContext("2d")
-    myCanevas.width = 500;
-    myCanevas.height = 500;
-    myCanevas.style.border = "1px solid";
-
- }
-     
-
-
 submit_button.addEventListener("click",function(){
-    console.info("helllooooo");
-    jsonexample_param["country"] = country_input.value
-     let resume = Client.query(jsonexample_param).then(function(moi){
-        console.log(JSON.parse(moi))
-       // dessine_graph ();
-      
-        console.log("hello");
-        return JSON.parse(moi)
-    }); 
+    console.log("helllooooo");
+    let jsonexample_param={"country":country_input.value};
+    console.log(Client.query(jsonexample_param));
     
-});
 
-console.log("fin");
- 
+});
