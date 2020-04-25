@@ -48,6 +48,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 self.send_response(200)
                 self.send_header('Content-type', 'text/html')
                 self.end_headers()
+                self.wfile.write(obj)
 
 
             if path == '/country_tweets': #/country_tweets?country=France
@@ -58,7 +59,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 self.send_header('Content-type', 'text/json')
                 self.end_headers()
                 obj = json.dumps(json_result)
-                #self.wfile.write(bytes(json.dumps(json_result), "utf8"))
+                self.wfile.write(bytes(json.dumps(json_result), "utf8"))
         
         else:
             self.send_response(404)
@@ -66,9 +67,8 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             self.end_headers()
             html = f"<html><head></head><body><h1>404 ERROR !!!!</h1></body></html>"
             obj = html
-            #self.wfile.write(bytes(html, "utf8"))
+            self.wfile.write(bytes(html, "utf8"))
                         
-        self.wfile.write(obj)
 
         return
 

@@ -13,7 +13,6 @@ def verify_if_file(path):
         print(os.getcwd())
         #Si le fichier demandé est un fichier css alors je rentre dans ce if
         if file.endswith(".css"):
-            file="/"+file
             mimetype= mimetypes['css']
             isFile = True    
         #Si le fichier demandé est un fichier js alors je rentre dans ce if
@@ -22,12 +21,10 @@ def verify_if_file(path):
             isFile = True
         #Si le fichier demandé est un fichier png alors je rentre dans ce if
         if file.endswith(".png"):
-            file="Client/Images/"+file
             mimetype= mimetypes['png']
             isFile = True
         #Si le fichier demandé est un fichier txt alors je rentre dans ce if
         if file.endswith(".txt"):
-            file="Client/js/"+file
             mimetype= mimetypes['txt']
             isFile = True
         #si le fichier est un des types demandé nous le retournons
