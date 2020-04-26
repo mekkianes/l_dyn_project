@@ -10,6 +10,19 @@ import files
 tweet = Tweets()
 
 class Handler(http.server.SimpleHTTPRequestHandler):
+    def do_OPTIONS(self):
+        print("optionnnnnnnnnnnns")
+        self.send_response(200, "ok")
+
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'GET, OPTIONS')
+        print("optionnnnnnnnnnnns")
+        self.send_header("Access-Control-Allow-Headers", "X-Requested-With")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+
+        self.end_headers()
+        print("finop")
+
     def do_GET(self):
         self.my_params = parse_qs(urlparse(self.path).query)
         path = parse.urlparse(self.path).path
