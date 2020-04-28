@@ -76,12 +76,13 @@ class Tweets:
             tmp = self.df
 
         if  pattern != '':
-         
-          print(tmp.size)
-          
-          tmp = tmp["text"].str.contains(pattern)
-          print(tmp.size)
-          print("i'm heeeeeeeeeeere")
+
+            print(tmp.size)
+
+            tmp['pattern_exists']= tmp["text"].str.contains(pattern)
+            tmp = tmp[tmp['pattern_exists']==True]
+            
+            print("i'm heeeeeeeeeeere")
         total_tweets = len(tmp)
 
         
@@ -110,4 +111,3 @@ class Tweets:
 
 
     
-        #return tmp.to_dict(orient="records")
