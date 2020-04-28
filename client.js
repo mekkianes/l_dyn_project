@@ -83,9 +83,10 @@ submit_button.addEventListener("click",function(){
         console.log(hashtags);
 
         var myBarchart = new Barchart(
-            {
+            {   
                 canvas:myCanvas,
-                seriesName:"Vinyl records",
+                type: "horizontalBar",
+                seriesName:"Trends",
                 padding:20,
                 gridScale:5,
                 gridColor:"#eeeeee",

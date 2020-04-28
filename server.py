@@ -24,6 +24,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         print("finop")
 
     def do_GET(self):
+        print("hello")
         self.my_params = parse_qs(urlparse(self.path).query)
         path = parse.urlparse(self.path).path
         print("Path : !!!!!!!!!!!!!   ", path)
@@ -65,9 +66,14 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
 
             if path == '/country_tweets': #/country_tweets?country=France
+                country = "" 
+                pattern = ""
                 if 'country' in params:
                     country = params['country'][0]
-                json_result = tweet.get_number_tweets_country(country)
+                if 'text' in params:
+                    pattern = params['text'][0]
+                
+                json_result = tweet.get_number_tweets_country(country,pattern)
                 self.send_response(200)
                 self.send_header('Content-type', 'text/json')
                 self.end_headers()

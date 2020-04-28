@@ -1,5 +1,12 @@
 import pandas as pd
 import json
+
+
+
+def filter_with_occurence(tmp, pattern):
+        
+        return tmp["text"].str.contains(pattern)
+
 class Tweets:
     def __init__(self):
         self.df = pd.read_csv("tweets.csv").sort_values(by="date")
@@ -62,12 +69,18 @@ class Tweets:
         
         return lang_country, lang_count
 
-    def get_number_tweets_country(self, country):
+
+    def get_number_tweets_country(self, country, pattern):
         if country != '':
             tmp = self.df[self.df['place_country']==country]
         else:
             tmp = self.df
+
+        if  pattern != '':
+          tmp = filter_with_occurence(tmp,pattern)
+            
         total_tweets = len(tmp)
+
         
         dic = dict()
         dic['length'] = total_tweets
@@ -89,4 +102,8 @@ class Tweets:
         dic['latitude'] = latitude
 
         return dic
+    
+
+
+    
         #return tmp.to_dict(orient="records")
