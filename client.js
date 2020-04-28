@@ -121,7 +121,7 @@ submit_button.addEventListener("click",function(){
                 var li = document.createElement("LI")
 
                 var hashtagTtile = document.createElement("h3")
-                hashtagTtile.innerHTML = key 
+                hashtagTtile.innerHTML = key + "( " + hashtags[key] +" )"
                 var hashtagSpan1 = document.createElement("span")
 
                 var hashtagSpan2 = document.createElement("span")
@@ -131,10 +131,11 @@ submit_button.addEventListener("click",function(){
                 hashtagSpan2.setAttribute("class","bar" )
                 var width =  hashtags[key] *100 / max ; 
                 console.log(width);
-                hashtagSpan2.style = {
+                hashtagSpan2.style.width = width  +"%";
+                /*hashtagSpan2.style = {
                     ...hashtagSpan2.style,
                     width
-                };
+                };*/
     
                 li.appendChild(hashtagTtile)
                 hashtagSpan1.appendChild(hashtagSpan2)
