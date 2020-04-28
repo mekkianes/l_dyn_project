@@ -69,7 +69,7 @@ Client.query = async function (params) {
         + paramString;
     console.log("url est ::",url)
     try{
-        res = await timeoutPromise(5000,Client.ajax("GET", url));
+        res = await timeoutPromise(50000,Client.ajax("GET", url));
         return JSON.parse(res);
     }catch(str){
         alert("ERROR")
@@ -77,6 +77,21 @@ Client.query = async function (params) {
         return res;
     }
 };
+
+
+function getMax(dic){
+    keys = Object.keys(dict);
+    max = 0 ;
+    for (keyi = 0; keyi < keys.length; keyi++) { 
+            v = keys[keyi];
+            if(max < v ) {
+                max = v ;
+            }
+    }
+
+    return max;
+}
+
 submit_button.addEventListener("click",function(){
     console.log("helllooooo");
     let jsonexample_param={"country":country_input.value,"pattern":pattern_input.value};
@@ -84,7 +99,7 @@ submit_button.addEventListener("click",function(){
     let results = Client.query(jsonexample_param).then(function(result) {
         console.log('!!');
         console.log(result);
-        var myCanvas = document.getElementById("myCanvas");
+        var divHashtags = document.getElementById("hashtagsbar");
 
         var hashtag_keys = result['hashtags'];
         var hashtag_values = result['hashtags_count'];
@@ -93,7 +108,45 @@ submit_button.addEventListener("click",function(){
         hashtag_keys.forEach((key, i) => hashtags[key] = hashtag_values[i]);
         console.log(hashtags);
 
-        var myBarchart = new Barchart(
+        values = Object.values(hashtag_values)
+        var max = Math.max.apply(Math, values)    // 1
+
+        
+        console.log(max);
+        
+    
+        
+        hashtag_keys.forEach((key, i) =>{
+                console.log(key +"\n")
+                var li = document.createElement("LI")
+
+                var hashtagTtile = document.createElement("h3")
+                hashtagTtile.innerHTML = key 
+                var hashtagSpan1 = document.createElement("span")
+
+                var hashtagSpan2 = document.createElement("span")
+                
+
+                hashtagSpan1.setAttribute("class", "bar")
+                hashtagSpan2.setAttribute("class","bar" )
+                var width =  hashtags[key] *100 / max ; 
+                console.log(width);
+                hashtagSpan2.style = {
+                    ...hashtagSpan2.style,
+                    width
+                };
+    
+                li.appendChild(hashtagTtile)
+                hashtagSpan1.appendChild(hashtagSpan2)
+                li.appendChild(hashtagSpan1)
+                
+
+                divHashtags.appendChild(li)
+
+        });
+
+
+        /*var myBarchart = new Barchart(
             {   
                 canvas:myCanvas,
                 type: "horizontalBar",
@@ -105,6 +158,6 @@ submit_button.addEventListener("click",function(){
                 colors:["#a55ca5","#67b6c7", "#bccd7a","#eb9743"]
             }
         );
-        myBarchart.draw();
+        myBarchart.draw();*/
     });
 });
