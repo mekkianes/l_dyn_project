@@ -1,10 +1,6 @@
 import pandas as pd
 import json
 
-
-
-        
-
 class Tweets:
     def __init__(self):
         self.df = pd.read_csv("tweets.csv").sort_values(by="date")
@@ -38,11 +34,8 @@ class Tweets:
         
         result = self.countWords(list_hashtags)
         return result
-    def hashtags_country(self, country):
-        if country != '':
-            hashtag_count = self.hashtags_count(self.df[self.df['place_country']==country])
-        else:
-            hashtag_count = self.hashtags_count(self.df)
+    def hashtags_country(self, tmp):
+        hashtag_count = self.hashtags_count(tmp)
         hashtags_items = [i[0] for i in hashtag_count]
         hashtags_values = [i[1] for i in hashtag_count]
         return hashtags_items, hashtags_values
@@ -90,7 +83,7 @@ class Tweets:
         dic['length'] = total_tweets
         print(dic['length'])
         
-        hashtags_items, hashtags_values = self.hashtags_country(country)
+        hashtags_items, hashtags_values = self.hashtags_country(tmp)
         dic['hashtags'] = hashtags_items
         dic['hashtags_count'] = hashtags_values
         
