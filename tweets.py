@@ -3,9 +3,7 @@ import json
 
 
 
-def filter_with_occurence(tmp, pattern):
         
-        return tmp["text"].str.contains(pattern)
 
 class Tweets:
     def __init__(self):
@@ -71,19 +69,25 @@ class Tweets:
 
 
     def get_number_tweets_country(self, country, pattern):
+        print(pattern)
         if country != '':
             tmp = self.df[self.df['place_country']==country]
         else:
             tmp = self.df
 
         if  pattern != '':
-          tmp = filter_with_occurence(tmp,pattern)
-            
+         
+          print(tmp.size)
+          
+          tmp = tmp["text"].str.contains(pattern)
+          print(tmp.size)
+          print("i'm heeeeeeeeeeere")
         total_tweets = len(tmp)
 
         
         dic = dict()
         dic['length'] = total_tweets
+        print(dic['length'])
         
         hashtags_items, hashtags_values = self.hashtags_country(country)
         dic['hashtags'] = hashtags_items

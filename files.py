@@ -8,9 +8,9 @@ def verify_if_file(path):
     try:
         isFile=False
         file=path[1:]
-        print('Files ! : ')
-        print("\n\nfile:",file,"\n\n")
-        print(os.getcwd())
+        #print('Files ! : ')
+        #print("\n\nfile:",file,"\n\n")
+        #print(os.getcwd())
         #Si le fichier demandé est un fichier css alors je rentre dans ce if
         if file.endswith(".css"):
             mimetype= mimetypes['css']
@@ -33,5 +33,5 @@ def verify_if_file(path):
         else:
             return False,False
     except Exception as e:
-        print("Je suis dans le verify_if_file",e," probleme avec le path",path)
+        #print("Je suis dans le verify_if_file",e," probleme avec le path",path)
         return False,False

@@ -2,6 +2,7 @@ var Client = {};
 
 
 let country_input = document.getElementById("country");
+let pattern_input = document.getElementById("text");
 
 let submit_button = document.getElementById("submitButton");
 
@@ -49,10 +50,20 @@ Client.ajax = function (method, url) {
 
 Client.query = async function (params) {
     let paramString = "";
+    number_of_params = Object.keys(params).length
+    if(number_of_params != 0){
+        firstKey = Object.keys(params)[0];
+        paramString += "?" + firstKey + "=" + encodeURIComponent(params[firstKey]);
+
+    }
+      
+    //we concatenate other parameters
     for (var p in params) {
-        if (params.hasOwnProperty (p)) {
-            paramString += "?" + p + "=" + encodeURIComponent(params[p]);
-        };
+        if(p != "country"){
+            if (params.hasOwnProperty (p)) {
+                paramString += "&" + p + "=" + encodeURIComponent(params[p]);
+            };
+        }
     };
     let url = "http://127.0.0.1:8000/country_tweets"
         + paramString;
@@ -68,7 +79,7 @@ Client.query = async function (params) {
 };
 submit_button.addEventListener("click",function(){
     console.log("helllooooo");
-    let jsonexample_param={"country":country_input.value};
+    let jsonexample_param={"country":country_input.value,"pattern":pattern_input.value};
     console.log(Client.query(jsonexample_param));
     let results = Client.query(jsonexample_param).then(function(result) {
         console.log('!!');
