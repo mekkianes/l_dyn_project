@@ -92,6 +92,86 @@ function getMax(dic){
     return max;
 }
 
+    var countries = ['Indonesia', 'Mexico', 'Thailand', '日本', 'United States', 'India',
+       'Sri Lanka', 'Ghana', '香港', 'Türkiye', 'México',
+       'Dominican Republic', 'Australia', 'Canada', 'Brasil',
+       'Republic of Korea', 'Kuwait', 'Malaysia', 'Italia', 'ประเทศไทย',
+       'Argentina', 'Nigeria', 'Republic of the Philippines', 'Japan',
+       'Estados Unidos', 'Switzerland', 'United Kingdom', 'Ethiopia',
+       'South Africa', 'سلطنة عمان', 'Finland', '新加坡', 'France',
+       'Colombia', 'Ecuador', "People's Republic of China", 'Qatar',
+       'Kingdom of Saudi Arabia', 'The Netherlands',
+       'المملكة العربية السعودية', 'Germany', 'Singapore',
+       'United Arab Emirates', 'Magyarország', 'Ukraine', 'Turkey',
+       'Украина', 'Ireland', 'Sverige', 'Nederland', 'Oman',
+       'دولة الكويت', 'Belgium', 'Беларусь', 'المملكة الأردنية الهاشمية',
+       'Cyprus', 'Россия', '台灣', 'España', 'Hashemite Kingdom of Jordan',
+       'Espanya', 'Austria', 'Latvia', 'Andorra', 'Croacia',
+       'Papua New Guinea', 'French Polynesia', 'Kenya', 'Japão', 'Italy',
+       'Chile', 'Azerbaijan', 'Svizzera', 'Polska', 'Tailandia',
+       'Venezuela', 'Deutschland', 'Taiwan', 'Macau', 'Duitsland',
+       'Russia', 'Bulgaria', 'El Salvador', 'Holanda', 'Georgia',
+       'الامارات العربية المتحدة', 'Cuba', 'België', 'Irlanda', 'Bhutan',
+       'Brazil', "Democratic People's Republic of Korea (North Korea)",
+       'भारत', '대한민국', 'New Zealand', 'Frankrijk', 'Tanzania',
+       'Etats-Unis', 'Malasia', 'Royaume-Uni', 'Lithuania', 'Namibia',
+       'Japon', 'Emiratos Árabes Unidos', 'Nuova Zelanda', 'Sweden',
+       'Hungria', 'Україна', 'Malaisie', 'Egypt', 'Suiza', 'Guatemala',
+       'Nepal', 'Antarctica', 'Panamá', 'Portugal', 'Hong Kong',
+       'Noruega', 'Hrvatska', 'Vietnam', 'Uruguay',
+       'Republic of Mauritius', 'Schweiz', 'Costa Rica',
+       'Reino de Marruecos', 'Paraguay', 'Peru', 'Česká republika',
+       'Österreich', 'Trinidad and Tobago', 'Suíça', 'Bahrain', 'Spain',
+       '中华人民共和国', 'Reino Unido', 'Senegal', 'Luxembourg', 'Stati Uniti',
+       'Pakistan', 'Danmark', 'Espagne', 'Morocco',
+       'Republic of Mozambique', 'Isle of Man', 'Spanje', 'Jamaica',
+       'França', 'Dominica', 'Italie', 'Nicaragua', 'مصر', 'Belgique',
+       'Rwanda', 'Uganda', 'Haiti', 'Mexique', 'Panama', 'Burundi',
+       'Frankrike', 'Zimbabwe', 'República Eslovaca', 'Israel', 'Algeria',
+       'ישראל', 'Francia', 'Kazakhstan', 'Greenland', 'Iraq',
+       'Islamic Republic of Iran', 'Uruguai', 'Lebanon', 'Espanha',
+       'Greece', 'Botswana', 'Япония', 'Iceland', 'Regno Unito', 'Ελλάς',
+       'Republika ng Pilipinas', 'Brunei', 'Barbados', 'Bangladesh',
+       'Suomi', 'ญี่ปุ่น', 'Inde', 'Việt Nam', 'ニュージーランド', 'România',
+       'Bahamas', 'Nueva Zelanda', 'Royaume du Maroc', 'Mexiko',
+       'Bolivie', 'Norway', "Lao People's Democratic Republic", 'Angola',
+       'Syrian Arab Republic', 'Myanmar', 'Vereinigte Arabische Emirate',
+       'Mali', 'Mongolia', 'Suecia', 'Vatican City', 'Benin', 'Albania',
+       'Czech Republic', 'Frankreich', "Côte d'Ivoire",
+       'Republic of Croatia', 'Former Yugoslav Republic of Macedonia',
+       'Slovak Republic', 'Honduras', 'Turchia', 'Republic of Serbia',
+       'Cayman Islands', 'تونس', 'مملكة البحرين', 'Bolivia',
+       'Republic of Belarus', 'Latvija', 'Romania', 'Poland', 'Canadá',
+       'Grenada', 'Islandia', 'Tunisie', 'Norge', 'República Checa',
+       'Lesotho', 'Cameroon', 'Allemagne', 'Kanada', 'Monaco', 'България',
+       'Zambia', 'Irlande', 'Denmark', 'Luxemburg', 'Saint Lucia',
+       'Afghanistan', 'Japón', 'Madagascar', 'Brasile',
+       'Polynésie Française', 'French Guiana', 'Liban', 'Malawi',
+       'Armenia', 'Jepang', 'Algérie', 'Spanien', 'Storbritannien',
+       'Eesti', 'Spagna', 'Alemania', 'Danimarca', 'Republic of Slovenia',
+       'جمهوری اسلامی ایران', 'Crna Gora', 'Maldives', 'Gambia',
+       'Uzbekistan', 'Ehemalige jugoslawische Republik Mazedonien',
+       'Türkei', 'Aruba', 'Rússia', 'Congo', 'Cambodia',
+       'Bosnia and Herzegovina', '일본', 'Sint Maarten',
+       'Antigua and Barbuda', 'Samoa', 'Moldova', 'Oostenrijk', 'Suisse',
+       'Namibië', 'Anguilla', 'République du Bénin', 'Norvegia',
+       'Bélgica', 'Hungary', 'Thaïlande', 'Tunisia', 'Slovenija',
+       'Swaziland', 'Verenigde Staten', 'Democratic Republic of Congo',
+       'Guam', 'Koweït', 'Djibouti', 'Suriname', 'Itália',
+       'Saint Barthélemy', 'North Korea', 'Fiji',
+       'Turks and Caicos Islands', 'New Caledonia', 'الجزائر', 'Tyskland',
+       'Tailândia', 'Ivory Coast', 'Alemanha', 'دولة قطر', 'Guadeloupe',
+       'Mauritania', 'پاکستان', 'Srbija', 'Malta', 'Brésil',
+       'Burkina Faso', 'Chipre'];
+    var list = document.getElementById('anrede');
+
+    countries.forEach(function(item){
+       var option = document.createElement('option');
+       option.value = item;
+       list.appendChild(option);
+    });
+
+
 submit_button.addEventListener("click",function(){
     console.log("helllooooo");
     let jsonexample_param={"country":country_input.value,"pattern":pattern_input.value};
