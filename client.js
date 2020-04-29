@@ -99,8 +99,12 @@ submit_button.addEventListener("click",function(){
     let results = Client.query(jsonexample_param).then(function(result) {
         console.log('!!');
         console.log(result);
+        
+        var tweets_number = document.getElementById("number_tweets");
+        tweets_number.innerHTML = "Number of tweets: " + result['length'];
+        tweets_number.style.color = '#d00';
         var divHashtags = document.getElementById("hashtagsbar");
-
+        divHashtags.innerHTML = "";
         var hashtag_keys = result['hashtags'];
         var hashtag_values = result['hashtags_count'];
 
@@ -145,6 +149,26 @@ submit_button.addEventListener("click",function(){
                 divHashtags.appendChild(li)
 
         });
+        console.log('la');
+        let res_hashtags = [];
+        
+        for(let i = 0; i < 10; i++){
+            res_hashtags.push({'name':hashtag_keys[i], 'score':hashtag_values[i]});
+        }
+        
+        let res_languages = [];
+        for(let i = 0; i < 10; i++){
+            res_languages.push({'name':result['lang_country'][i], 'score':result['lang_count'][i]});
+        }
+        let res_places = [];
+        for(let i = 0; i < 10; i++){
+            res_places.push({'name':result['places_country'][i], 'score':result['places_count'][i]});
+        }
+        console.log("avant");
+        console.log(result['hashtag_count']);
+        createGraph("chart1", "Top hashtags", res_hashtags, Math.max(...result['hashtags_count']));
+        createGraph("chart2", "Top languages", res_languages, Math.max(...result['lang_count']));
+        createGraph("chart3", "Top places", res_places, Math.max(...result['places_count']));
 
 
         /*var myBarchart = new Barchart(
