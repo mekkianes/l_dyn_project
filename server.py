@@ -7,7 +7,14 @@ from tweets import Tweets
 import json
 import os
 import files
+
+
+from http.server import HTTPServer
+from socketserver import ThreadingMixIn
+
+
 tweet = Tweets()
+
 
 class Handler(http.server.SimpleHTTPRequestHandler):
     def do_OPTIONS(self):
@@ -93,10 +100,18 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
         return
 
-httpd = socketserver.TCPServer(('', 8000), Handler)
-httpd.allow_reuse_address = True
-try:
-    httpd.serve_forever()
-except KeyboardInterrupt:
-    print('Shut the server down')
-    httpd.socket.close()
+
+class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
+        """Handle requests in a separate thread."""
+
+
+
+if __name__ == '__main__':
+    print("hello")
+    server = ThreadedHTTPServer(('localhost',8000), Handler)
+
+    try:
+        server.serve_forever()
+    except KeyboardInterrupt:
+        print('Shut the server down')
+        server.socket.close()
