@@ -1,4 +1,4 @@
-var myCanvas = document.getElementById("myCanvas");
+/* var myCanvas = document.getElementById("myCanvas");
 myCanvas.width = 300;
 myCanvas.height = 300;
    
@@ -121,7 +121,7 @@ var myBarchart = new Barchart(
         data:myVinyls,
         colors:["#a55ca5","#67b6c7", "#bccd7a","#eb9743"]
     }
-);
+); */
 //myBarchart.draw();
 function createGraph(chart_name, title, data, max_data){
 console.log(data);
@@ -196,3 +196,85 @@ document.getElementById(chart_name).innerHTML = chart.outerHTML;
 
     
 }
+
+  let set_pos = function(o, x, y){
+    o.style.top = y+"px";
+    o.style.left = x+"px";
+}
+
+let set_dim = function(o,x,y,w,h){
+    set_pos(o,x,y);
+    o.style.width = w+"px";
+    o.style.height = h+"px";
+}
+
+let get_ticks_step = function(max_value, max_ticks_count){
+    let ticks_step = max_value / max_ticks_count;
+    let normed_tick = ticks_step;
+    let mult = 1;
+    while(normed_tick > 5){
+        normed_tick /= 10;
+        mult *= 10;
+    }
+    //use multiples of 1
+    if(normed_tick <= 1){
+        ticks_step = 1 * mult;
+    }
+    //use multiples of 2
+    else if(normed_tick <= 2){
+        ticks_step = 2 * mult;
+    }
+    //use multiples of 3
+    else{
+        ticks_step = 5 * mult;
+    }
+
+    return ticks_step;
+}
+
+
+let lat_lon_to_xy = function(lat, lon, img_size){
+    let deg_to_rad = function(deg){
+        return deg / (180/Math.PI);
+    }
+
+    let ret = { x : lon, y : Math.log(Math.tan(Math.PI/4 + deg_to_rad(lat)/2))};
+    ret.x = img_size.x * (ret.x + 180) / 360;
+    ret.y = img_size.y/2 - img_size.x * ret.y / (2 * Math.PI);
+
+    //console.log(lon + ", " + lat + " : " + ret.x + ", " + ret.y);
+
+    return ret;
+}
+
+let create_map_point = function(lat, lon, radius, map_img){
+    let pos = lat_lon_to_xy(lat, lon, { x: map_img.width, y : map_img.height });
+    let pt = document.createElement("div");
+    pt.className = "map_point";
+    set_dim(pt, pos.x - radius/2, pos.y - radius/2, radius, radius);
+    pt.style.lineHeight = pt.style.height;
+    return pt;
+}
+
+let map_div = document.getElementById("map_container");
+let map = document.getElementById("map");
+console.log('h');
+/* window.addEventListener("load", function() {
+    let map_size = { x : map.width, y : map.height };
+    console.log("image size : " + map_size.x + ", " + map_size.y);
+    let paris = { lat : 48.8534, lon : 2.333333 };
+    let dz = { lat : 29.926168, lon : 3.744182 };
+    let isl = { lat : 63.942097, lon : -18.580037 };
+    let pt = create_map_point(isl.lat, isl.lon, 30, map);
+    pt.innerHTML = "15";
+    map_div.appendChild(pt);
+
+    pt = create_map_point(paris.lat, paris.lon, 20, map);
+    pt.innerHTML = "12";
+    map_div.appendChild(pt);
+
+    pt = create_map_point(dz.lat, dz.lon, 40, map);
+    pt.innerHTML = "20";
+    map_div.appendChild(pt);
+    console.log(map_div);
+}); */

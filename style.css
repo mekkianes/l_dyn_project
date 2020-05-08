@@ -143,3 +143,23 @@ table {
 .twenty {
   background: #7F8C8D;
 }
+.map {
+    height: 100%;
+    max-width: 100%;
+}
+
+.map_container {
+    position: relative;
+    width:550px;
+    height:400px;
+    float: left;
+}
+
+.map_point {
+    position: absolute;
+    background-color: blue;
+    border-radius: 50%;
+    text-align: center;
+    color: white;
+    /*border: 2px dashed black;*/
+}

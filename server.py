@@ -7,6 +7,7 @@ from tweets import Tweets
 import json
 import os
 import files
+import time
 tweet = Tweets()
 
 class Handler(http.server.SimpleHTTPRequestHandler):
@@ -60,6 +61,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 f = open('index.html','rb')
                 obj = f.read()
                 f.close()
+
                 self.send_response(200)
                 self.send_header('Content-type', 'text/html')
                 self.end_headers()
@@ -79,6 +81,8 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 self.send_response(200)
                 self.send_header('Content-type', 'text/json')
                 self.end_headers()
+                #Test timeout
+                #time.sleep(10)                                                                                                                                                                                                                   
                 obj = json.dumps(json_result)
                 self.wfile.write(bytes(json.dumps(json_result), "utf8"))
         
@@ -95,6 +99,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
 httpd = socketserver.TCPServer(('', 8000), Handler)
 httpd.allow_reuse_address = True
+httpd.timeout = 20 #timeout in seconds
 try:
     httpd.serve_forever()
 except KeyboardInterrupt:

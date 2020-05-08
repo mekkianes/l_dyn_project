@@ -250,6 +250,22 @@ submit_button.addEventListener("click",function(){
         createGraph("chart2", "Top languages", res_languages, Math.max(...result['lang_count']));
         createGraph("chart3", "Top places", res_places, Math.max(...result['places_count']));
 
+        let res_coord = [];
+        for(let i = 0; i < result['latitude'].length; i++){
+            res_coord.push({'lat':result['latitude'][i], 'lon':result['longitude'][i]});
+        }
+        
+        let map_div = document.getElementById("map_container");
+        let map = document.getElementById("map");
+        let map_size = { x : map.width, y : map.height };
+        
+        for(let i = 0; i < result['latitude'].length; i++){
+               let pt = create_map_point(res_coord[i].lat, res_coord[i].lon, 4, map);
+                //pt.innerHTML = "15";
+                map_div.appendChild(pt);
+        }
+         
+        console.log(res_coord);
 
         /*var myBarchart = new Barchart(
             {   
