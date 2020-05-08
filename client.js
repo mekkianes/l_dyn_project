@@ -260,11 +260,22 @@ submit_button.addEventListener("click",function(){
         let map_size = { x : map.width, y : map.height };
         
         for(let i = 0; i < result['latitude'].length; i++){
-               let pt = create_map_point(res_coord[i].lat, res_coord[i].lon, 4, map);
+               let pt = create_map_point(res_coord[i].lat, res_coord[i].lon, 5, map);
                 //pt.innerHTML = "15";
                 map_div.appendChild(pt);
         }
-         
+
+        var list_tweets = document.getElementById('text-tweet');
+        
+        for(let i = 0; i < result['text'].length; i++){
+            var text_tweet_i = result['text'][i];
+            var entry = document.createElement('li');
+            entry.appendChild(document.createTextNode(text_tweet_i));
+            list_tweets.appendChild(entry);  
+        }
+
+
+
         console.log(res_coord);
 
         /*var myBarchart = new Barchart(

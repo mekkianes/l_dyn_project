@@ -10,21 +10,17 @@ body {
   background:#333
   
 }
-
 .hashtags{
   
   width: 500px;
   color: white;
 
 }
-
-
 .hashtags li { 
 
 
   margin : 20px 0;
 }
-
 .bar{
 
   background: #353b48;
@@ -34,19 +30,12 @@ body {
   border-radius: 3px;
   overflow: hidden;
   box-shadow: 0 0 10px #2187e7b3
-
 }
-
-
 .bar span{ 
   height: 2px;
   
   background: #2187e7;
 }
-
-
-
-
 .chart {
   padding: 20px;
 }
@@ -150,8 +139,8 @@ table {
 
 .map_container {
     position: relative;
-    width:550px;
-    height:400px;
+    width:800px;
+    height:600px;
     float: left;
 }
 
@@ -161,5 +150,4 @@ table {
     border-radius: 50%;
     text-align: center;
     color: white;
-    /*border: 2px dashed black;*/
 }

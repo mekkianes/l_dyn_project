@@ -75,7 +75,6 @@ class Tweets:
             tmp['pattern_exists']= tmp["text"].str.contains(pattern)
             tmp = tmp[tmp['pattern_exists']==True]
             
-            print("i'm heeeeeeeeeeere")
         total_tweets = len(tmp)
 
         
@@ -99,6 +98,7 @@ class Tweets:
         dic['longitude'] = longitude
         dic['latitude'] = latitude
 
+        dic['text'] = tmp['text'].values.tolist()[:10]
         return dic
     
 
