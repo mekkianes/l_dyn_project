@@ -10,21 +10,17 @@ body {
   background:#333
   
 }
-
 .hashtags{
   
   width: 500px;
   color: white;
 
 }
-
-
 .hashtags li { 
 
 
   margin : 20px 0;
 }
-
 .bar{
 
   background: #353b48;
@@ -34,19 +30,12 @@ body {
   border-radius: 3px;
   overflow: hidden;
   box-shadow: 0 0 10px #2187e7b3
-
 }
-
-
 .bar span{ 
   height: 2px;
   
   background: #2187e7;
 }
-
-
-
-
 .chart {
   padding: 20px;
 }
@@ -78,6 +67,28 @@ table {
   font-size: 77%;
   padding: 5px;
   float: left;
+}
+.map {
+  height: 100%;
+  max-width: 100%;
+}
+
+.map_div {
+  position: relative;
+  width:800px;
+  height:600px;
+  float: left;
+}
+
+.map_point {
+  position: absolute;
+  background-color: rgb(255, 0, 13);
+  border-radius: 50%;
+  text-align: center;
+  color: white;
+}
+h3{
+  color: white;
 }
 /*Flat UI colors*/
 .one {

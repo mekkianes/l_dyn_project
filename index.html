@@ -4,48 +4,29 @@
     <title>Twitter dashboard</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="shortcut icon" href="">
-
   </head>
   <body>
     <form method ="get" class="form-inline">
-      
         <input type="text" id="country" name="Country" placeholder="Enter a country" list="anrede">
         <datalist id="anrede"></datalist>
-
         <input type="text" id="text" name="Text" placeholder="Enter a text">
-
         <input name="Search" type="button" id="submitButton" value="Search"/>
-
-
     </form>
-
     <h3 id="number_tweets"></h3>
-
+    <div id="container1" style="position: relative;">
+        <div id="map_div" class="map_div">
+            <img src="world_map.png" class="map" id="map">
+        </div>
+    </div>
     <div id="chart1" class="chart"></div>
     <div id="chart2" class="chart"></div>
     <div id="chart3" class="chart"></div>
-
     <legend for="myCanvas"></legend>
     <div class ="hashtags" id ="hashtagsbar">
-      
     </div>
-    <!--
-    <script>
-      $(document).ready(function() {
-       $('form').on('submit', function(event) {
-        alert('hi');
-        event.preventDefault();
-       });
-       
-      });
-  
-    </script>
-  -->
+    <h3>Tweets: </h3>
+    <div id = "text-tweet">
   <script type="text/javascript" src="client.js"></script>
   <script type="text/javascript" src="graph.js"></script>
-
   </body>
-
-
-
 </html>

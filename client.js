@@ -1,35 +1,27 @@
 var Client = {};
-
-
 let country_input = document.getElementById("country");
 let pattern_input = document.getElementById("text");
-
 let submit_button = document.getElementById("submitButton");
 
-console.log('Client 1');
+const timeoutClient = function(ms, promise){
 
-const timeoutPromise = function(ms, promise){
-
-    // Creer une promesse qui est rejeter au bout de ms en millisecondes
     let timeout = new Promise((resolve, reject) => {
       let id = setTimeout(() => {
         clearTimeout(id);
-        reject('Timed out in '+ ms + 'ms.')
+        reject('timed out '+ ms + 'ms.')
       }, ms)
     })
-  
-    // race retourne la promesse qui se manifeste en premier CAD qui retourne soit un resolve ou un reject
+
     return Promise.race([
       promise,
       timeout
     ])
   }
   
-Client.ajax = function (method, url) {
+Client.respond = function (method, url) {
     return new Promise ((resolve, reject) => {
         let xhr = new XMLHttpRequest();
         xhr.addEventListener("readystatechange",  function () {
-            /* quand la requête change à l'état 'terminé' */
             if (this.readyState == 4) {
                 if (this.status == 200)
                     resolve(this.response);
@@ -38,26 +30,19 @@ Client.ajax = function (method, url) {
             }
         });
 
-        /* on commence la requête HTTP */
         xhr.open(method, url);
-        xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8"); // type de retour
-        xhr.setRequestHeader( 'Api-User-Agent', 'M1Info/1.0' ); //spécifique à Wikimedia        /* on définit quelques en-têtes */
-        /* on envoie la requête */
+        xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+        xhr.setRequestHeader( 'Api-User-Agent', 'M1Info/1.0' ); 
         xhr.send();
     })
 };
-
-
 Client.query = async function (params) {
     let paramString = "";
     number_of_params = Object.keys(params).length
     if(number_of_params != 0){
         firstKey = Object.keys(params)[0];
         paramString += "?" + firstKey + "=" + encodeURIComponent(params[firstKey]);
-
     }
-      
-    //we concatenate other parameters
     for (var p in params) {
         if(p != "country"){
             if (params.hasOwnProperty (p)) {
@@ -65,11 +50,11 @@ Client.query = async function (params) {
             };
         }
     };
-    let url = "http://127.0.0.1:8000/country_tweets"
+    let url = "http://localhost:8000/country_tweets"
         + paramString;
     console.log("url est ::",url)
     try{
-        res = await timeoutPromise(50000,Client.ajax("GET", url));
+        res = await timeoutClient(50000,Client.respond("GET", url));
         return JSON.parse(res);
     }catch(str){
         alert("ERROR")
@@ -77,21 +62,6 @@ Client.query = async function (params) {
         return res;
     }
 };
-
-
-function getMax(dic){
-    keys = Object.keys(dict);
-    max = 0 ;
-    for (keyi = 0; keyi < keys.length; keyi++) { 
-            v = keys[keyi];
-            if(max < v ) {
-                max = v ;
-            }
-    }
-
-    return max;
-}
-
     var countries = ['Indonesia', 'Mexico', 'Thailand', '日本', 'United States', 'India',
        'Sri Lanka', 'Ghana', '香港', 'Türkiye', 'México',
        'Dominican Republic', 'Australia', 'Canada', 'Brasil',
@@ -187,55 +157,33 @@ submit_button.addEventListener("click",function(){
         divHashtags.innerHTML = "";
         var hashtag_keys = result['hashtags'];
         var hashtag_values = result['hashtags_count'];
-
         var hashtags = {};
         hashtag_keys.forEach((key, i) => hashtags[key] = hashtag_values[i]);
         console.log(hashtags);
-
         values = Object.values(hashtag_values)
-        var max = Math.max.apply(Math, values)    // 1
-
-        
-        console.log(max);
-        
-    
-        
+        var max = Math.max.apply(Math, values)    
         hashtag_keys.forEach((key, i) =>{
                 console.log(key +"\n")
                 var li = document.createElement("LI")
-
                 var hashtagTtile = document.createElement("h3")
                 hashtagTtile.innerHTML = key + "( " + hashtags[key] +" )"
                 var hashtagSpan1 = document.createElement("span")
-
                 var hashtagSpan2 = document.createElement("span")
-                
-
                 hashtagSpan1.setAttribute("class", "bar")
                 hashtagSpan2.setAttribute("class","bar" )
                 var width =  hashtags[key] *100 / max ; 
                 console.log(width);
                 hashtagSpan2.style.width = width  +"%";
-                /*hashtagSpan2.style = {
-                    ...hashtagSpan2.style,
-                    width
-                };*/
-    
                 li.appendChild(hashtagTtile)
                 hashtagSpan1.appendChild(hashtagSpan2)
                 li.appendChild(hashtagSpan1)
-                
-
                 divHashtags.appendChild(li)
-
         });
         console.log('la');
         let res_hashtags = [];
-        
         for(let i = 0; i < 10; i++){
             res_hashtags.push({'name':hashtag_keys[i], 'score':hashtag_values[i]});
         }
-        
         let res_languages = [];
         for(let i = 0; i < 10; i++){
             res_languages.push({'name':result['lang_country'][i], 'score':result['lang_count'][i]});
@@ -250,19 +198,41 @@ submit_button.addEventListener("click",function(){
         createGraph("chart2", "Top languages", res_languages, Math.max(...result['lang_count']));
         createGraph("chart3", "Top places", res_places, Math.max(...result['places_count']));
 
+        let res_coord = [];
+        for(let i = 0; i < result['latitude'].length; i++){
+            res_coord.push({'lat':result['latitude'][i], 'lon':result['longitude'][i]});
+        }
+        
+        let map_div = document.getElementById("map_div");
+        let map = document.getElementById("map");
+        let map_size = { x : map.width, y : map.height };
+        
+        for(let i = 0; i < result['latitude'].length; i++){
+               let pt = map_creation(res_coord[i].lat, res_coord[i].lon, 5, map);
+                map_div.appendChild(pt);
+        }
+        var listDiv = document.getElementById("text-tweet");
+        listDiv.innerHTML = '';
+        var ul=document.createElement('ul');
+        listDiv.appendChild(ul);
+        for (var i = 0; i < result['text'].length; ++i) {
+          var li=document.createElement('li');
+          var content = document.createElement('small');
+          var content_text = document.createTextNode(result['text'][i]);
+          // Set color to purple
+          content.style.color = 'purple';
 
-        /*var myBarchart = new Barchart(
-            {   
-                canvas:myCanvas,
-                type: "horizontalBar",
-                seriesName:"Trends",
-                padding:20,
-                gridScale:5,
-                gridColor:"#eeeeee",
-                data:hashtags,
-                colors:["#a55ca5","#67b6c7", "#bccd7a","#eb9743"]
-            }
-        );
-        myBarchart.draw();*/
+// Set the background color to a light gray
+            content.style.backgroundColor = '#e5e5e5';
+
+// Set the height to 150px
+            content.style.fontsize = '60px';
+          content.appendChild(content_text);          
+
+          li.appendChild(content);
+          
+          ul.appendChild(li);                                 
+        }
+
     });
 });
