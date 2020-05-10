@@ -65,7 +65,7 @@ Client.query = async function (params) {
             };
         }
     };
-    let url = "http://127.0.0.1:8000/country_tweets"
+    let url = "http://localhost:8000/country_tweets"
         + paramString;
     console.log("url est ::",url)
     try{
@@ -265,18 +265,32 @@ submit_button.addEventListener("click",function(){
                 map_div.appendChild(pt);
         }
 
-        var list_tweets = document.getElementById('text-tweet');
-        
-        for(let i = 0; i < result['text'].length; i++){
-            var text_tweet_i = result['text'][i];
-            var entry = document.createElement('li');
-            entry.appendChild(document.createTextNode(text_tweet_i));
-            list_tweets.appendChild(entry);  
+        var listDiv = document.getElementById("text-tweet");
+        listDiv.innerHTML = '';
+        var ul=document.createElement('ul');
+        listDiv.appendChild(ul);
+        for (var i = 0; i < result['text'].length; ++i) {
+          var li=document.createElement('li');
+          li.className = "list-group-item list-group-item-action flex-column align-items-start";
+
+          var content = document.createElement('small');
+          var content_text = document.createTextNode(result['text'][i]);
+          // Set color to purple
+          content.style.color = 'purple';
+
+// Set the background color to a light gray
+            content.style.backgroundColor = '#e5e5e5';
+
+// Set the height to 150px
+            content.style.fontsize = '15px';
+          content.appendChild(content_text);          
+
+          li.appendChild(content);
+          
+          ul.appendChild(li);                                 
         }
-
-
-
-        console.log(res_coord);
+        
+        
 
         /*var myBarchart = new Barchart(
             {   
