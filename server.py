@@ -12,52 +12,36 @@ tweet = Tweets()
 
 class Handler(http.server.SimpleHTTPRequestHandler):
     def do_OPTIONS(self):
-        #print("optionnnnnnnnnnnns")
         self.send_response(200, "ok")
 
         self.send_header('Access-Control-Allow-Origin', '*')
         self.send_header('Access-Control-Allow-Methods', 'GET, OPTIONS')
-        #print("optionnnnnnnnnnnns")
         self.send_header("Access-Control-Allow-Headers", "X-Requested-With")
         self.send_header("Access-Control-Allow-Headers", "Content-Type")
 
         self.end_headers()
-        #print("finop")
 
     def do_GET(self):
-        #print("hello")
         self.my_params = parse_qs(urlparse(self.path).query)
         path = parse.urlparse(self.path).path
-        #print("Path : !!!!!!!!!!!!!   ", path)
         print(path)
         params = parse_qs(urlparse(self.path).query)
-        #Nous verifions si on demande au serveur un fichier
-        #file = 'client.js'
-        #mimetype = "application/javascript" 
-        file, mimetype= files.verify_if_file(path)
-        #si nous trouvons bien le fichier nous le retournons sinon on continue
+        file, typeFichier= files.verify_if_file(path)
         if file!=False:
             try:
-                #On lit le fichier
-                #print("try to open",file)
-                #print(os.getcwd()+"/"+file)
                 file_to_open = open(os.getcwd()+"/"+file,'rb')
                 self.send_response(200)
-                self.send_header('Content-type',mimetype)
+                self.send_header('Content-type',typeFichier)
                 self.end_headers()
                 self.wfile.write(file_to_open.read())
                 file_to_open.close() 
-            except Exception as e:# Sinon not found 404
-                #print("Fichier indisponible",e,"dans le iffile de serveur")
+            except Exception as e:
                 self.send_error(404,'File Not Found %s' %file)
-                #self.send_error(404,'File Not Found %s' %file)       
             return            
 
         services_list = ['/', '/country_tweets']
         if path in services_list:
-            #print(path)
             if path == '/':
-                #print('here!!')
                 f = open('index.html','rb')
                 obj = f.read()
                 f.close()
