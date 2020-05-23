@@ -2,9 +2,9 @@
 
 To start web application execute:
 
-sudo docker build --tag webapptest .
+docker build -t web-app .
 
-sudo docker run --name python-app -p 8000:8000 webapptest
+docker run -p 8000:8000 -d --net=host web-app
 
 Then go to url and type:
 
