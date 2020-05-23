@@ -3,21 +3,22 @@ let country_input = document.getElementById("country");
 let pattern_input = document.getElementById("text");
 let submit_button = document.getElementById("submitButton");
 
+// Timeout => limiter le temps pour une promesse
 const timeoutClient = function(ms, promise){
-
+    //Promesse rejetée au bout de ms
     let timeout = new Promise((resolve, reject) => {
       let id = setTimeout(() => {
         clearTimeout(id);
         reject('timed out '+ ms + 'ms.')
       }, ms)
     })
-
+    //Retourne resolve ou reject
     return Promise.race([
       promise,
       timeout
     ])
   }
-  
+// Requete au server et retourne une promesse
 Client.respond = function (method, url) {
     return new Promise ((resolve, reject) => {
         let xhr = new XMLHttpRequest();
@@ -36,6 +37,7 @@ Client.respond = function (method, url) {
         xhr.send();
     })
 };
+//Query sur les tweets
 Client.query = async function (params) {
     let paramString = "";
     number_of_params = Object.keys(params).length
@@ -43,6 +45,7 @@ Client.query = async function (params) {
         firstKey = Object.keys(params)[0];
         paramString += "?" + firstKey + "=" + encodeURIComponent(params[firstKey]);
     }
+    //Iterer sur les parametres
     for (var p in params) {
         if(p != "country"){
             if (params.hasOwnProperty (p)) {
@@ -62,6 +65,7 @@ Client.query = async function (params) {
         return res;
     }
 };
+//Liste des pays pour la barre de recherche
     var countries = ['Indonesia', 'Mexico', 'Thailand', '日本', 'United States', 'India',
        'Sri Lanka', 'Ghana', '香港', 'Türkiye', 'México',
        'Dominican Republic', 'Australia', 'Canada', 'Brasil',
@@ -139,17 +143,18 @@ Client.query = async function (params) {
        var option = document.createElement('option');
        option.value = item;
        list.appendChild(option);
+       //Ajouter les children
     });
 
 
 submit_button.addEventListener("click",function(){
-    console.log("helllooooo");
     let jsonexample_param={"country":country_input.value,"pattern":pattern_input.value};
     console.log(Client.query(jsonexample_param));
     let results = Client.query(jsonexample_param).then(function(result) {
-        console.log('!!');
         console.log(result);
-        
+        //On recupere le resultat json
+
+        //Parse le json
         var tweets_number = document.getElementById("number_tweets");
         tweets_number.innerHTML = "Number of tweets: " + result['length'];
         tweets_number.style.color = '#d00';
@@ -161,7 +166,8 @@ submit_button.addEventListener("click",function(){
         hashtag_keys.forEach((key, i) => hashtags[key] = hashtag_values[i]);
         console.log(hashtags);
         values = Object.values(hashtag_values)
-        var max = Math.max.apply(Math, values)    
+        var max = Math.max.apply(Math, values)   
+        //Formatage au bon format des resultat pour l'ajouter au children 
         hashtag_keys.forEach((key, i) =>{
                 console.log(key +"\n")
                 var li = document.createElement("LI")
@@ -179,7 +185,6 @@ submit_button.addEventListener("click",function(){
                 li.appendChild(hashtagSpan1)
                 divHashtags.appendChild(li)
         });
-        console.log('la');
         let res_hashtags = [];
         for(let i = 0; i < 10; i++){
             res_hashtags.push({'name':hashtag_keys[i], 'score':hashtag_values[i]});
@@ -192,8 +197,7 @@ submit_button.addEventListener("click",function(){
         for(let i = 0; i < 10; i++){
             res_places.push({'name':result['places_country'][i], 'score':result['places_count'][i]});
         }
-        console.log("avant");
-        console.log(result['hashtag_count']);
+        //Mettre a jour les graphes
         createGraph("chart1", "Top hashtags", res_hashtags, Math.max(...result['hashtags_count']));
         createGraph("chart2", "Top languages", res_languages, Math.max(...result['lang_count']));
         createGraph("chart3", "Top places", res_places, Math.max(...result['places_count']));
@@ -222,10 +226,10 @@ submit_button.addEventListener("click",function(){
           // Set color to purple
           content.style.color = 'purple';
 
-// Set the background color to a light gray
+        // Set the background color to a light gray
             content.style.backgroundColor = '#e5e5e5';
 
-// Set the height to 150px
+        // Set the height to 150px
             content.style.fontsize = '60px';
           content.appendChild(content_text);          
 

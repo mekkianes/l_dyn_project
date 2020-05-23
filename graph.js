@@ -63,30 +63,32 @@ for (var i = 0; i < chartjson.data.length; i++) {
    legbox.appendChild(bartext);
    legend.appendChild(legbox);
 }
+// Ajout des children 
 barrow.appendChild(legend);
 barchart.appendChild(barrow);
 barchart.appendChild(legendrow);
 chart.appendChild(barchart);
 document.getElementById(chart_name).innerHTML = chart.outerHTML;   
 }
+// Changer la position de l'objet o en x,y 
   let change_position = function(o, x, y){
     o.style.top = y+"px";
     o.style.left = x+"px";
 }
-
+// Changer la dimension de l'objet 
 let change_dimension = function(o,x,y,w,h){
     change_position(o,x,y);
     o.style.width = w+"px";
     o.style.height = h+"px";
 }
-
+// Convertir latitude et longitude en X, Y
 let lat_lon_xy = function(lat, lon, size){
     let res = { x : lon, y : Math.log(Math.tan(Math.PI/4 + (lat / (180/Math.PI))/2))};
     res.x = size.x * (res.x + 180) / 360;
     res.y = size.y/2 - size.x * res.y / (2 * Math.PI);
     return res;
 }
-
+// Creation de la map 
 let map_creation = function(lat, lon, radius, image){
     let position = lat_lon_xy(lat, lon, { x: image.width, y : image.height });
     let point = document.createElement("div");

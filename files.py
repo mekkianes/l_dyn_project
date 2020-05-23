@@ -1,37 +1,33 @@
 import os
 import sys
-mimetypes = { "jpg" : "image/jpg", "jpeg" : "image/jpeg", "png" : "image/png", "html" : "text/html",
-               "js" : "application/javascript", "css" : "text/css", "json" : "application/json",
-               "txt":"text/plain"}
+types = { "png" : "image/png", "html" : "text/html",
+               "js" : "application/javascript", "css" : "text/css", "json" : "application/json"}
 
 def verify_if_file(path):
     try:
         isFile=False
         file=path[1:]
-        #print('Files ! : ')
-        #print("\n\nfile:",file,"\n\n")
-        #print(os.getcwd())
-        #Si le fichier demandé est un fichier css alors je rentre dans ce if
+        #Demander fichier css
         if file.endswith(".css"):
-            mimetype= mimetypes['css']
+            type_file = types['css']
             isFile = True    
-        #Si le fichier demandé est un fichier js alors je rentre dans ce if
+        #Demander fichier javascript
         if file.endswith(".js"):
-            mimetype= mimetypes['js']
+            type_file= types['js']
             isFile = True
-        #Si le fichier demandé est un fichier png alors je rentre dans ce if
+        #Demander image png
         if file.endswith(".png"):
-            mimetype= mimetypes['png']
+            type_file= types['png']
             isFile = True
-        #Si le fichier demandé est un fichier txt alors je rentre dans ce if
+        #Demander fichier txt
         if file.endswith(".txt"):
-            mimetype= mimetypes['txt']
+            mimetype_filetype= types['txt']
             isFile = True
         #si le fichier est un des types demandé nous le retournons
         if isFile:
-            return file,mimetype
+            return file,type_file
         else:
             return False,False
     except Exception as e:
-        #print("Je suis dans le verify_if_file",e," probleme avec le path",path)
+        #Probleme
         return False,False
