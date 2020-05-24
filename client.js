@@ -53,12 +53,20 @@ Client.query = async function (params) {
             };
         }
     };
-    let url = "http://localhost:8000/country_tweets"
-        + paramString;
-    console.log("url est ::",url)
     try{
+        let url = "http://localhost:8000/country_tweets"
+        + paramString;
         res = await timeoutClient(50000,Client.respond("GET", url));
-        return JSON.parse(res);
+        let url2 = JSON.parse(res)['url'];
+        let ready_result = false;
+        while(ready_result == false){
+            res2 = await timeoutClient(50000,Client.respond("GET", url2));
+            result_json = JSON.parse(res2)['status'];
+            if(result_json == "finished"){
+                ready_result = true;
+            }  
+        }
+        return JSON.parse(res2)['result'];
     }catch(str){
         alert("ERROR")
         res =str
